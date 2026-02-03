@@ -10,7 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  intl: ^0.20.2
 
   cupertino_icons: ^1.0.8
   intl: ^0.20.2
@@ -29,9 +28,13 @@ flutter:
     - family: Eesti
       fonts:
         - asset: assets/fonts/GT-Eesti-Bold.otf
+          weight: 700
         - asset: assets/fonts/GT-Eesti-Light.otf
+          weight: 300
         - asset: assets/fonts/GT-Eesti-Regular.otf
+          weight: 400
         - asset: assets/fonts/GT-Eesti-Thin.otf
+          weight: 100
  
   assets:
     - assets/images/
