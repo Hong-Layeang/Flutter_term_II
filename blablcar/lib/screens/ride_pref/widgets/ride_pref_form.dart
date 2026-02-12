@@ -1,4 +1,5 @@
 import 'package:blablcar/theme/theme.dart';
+import 'package:blablcar/utils/animations_util.dart';
 import 'package:blablcar/widgets/display/bla_divider.dart';
 import 'package:flutter/material.dart';
 
@@ -57,6 +58,30 @@ class _RidePrefFormState extends State<RidePrefForm> {
   // ----------------------------------
   // Handle events
   // ----------------------------------
+  void _onLocationPressed(bool isDeparture) async {
+    final selectedLocation = await Navigator.push<Location>(
+      context,
+      AnimationUtils.createBottomToTopRoute(const LocationPickerScreen()),
+    );
+    
+    if (selectedLocation != null) {
+      setState(() {
+        if (isDeparture) {
+          departure = selectedLocation;
+        } else {
+          arrival = selectedLocation;
+        }
+      });
+    }
+  }
+
+  void _onDatePressed() async {
+
+  }
+
+  void _onSeatsPressed() async {
+
+  }
 
   void _onSearchPressed() async {
     if (departure == null) return;
