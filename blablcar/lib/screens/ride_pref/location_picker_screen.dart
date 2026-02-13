@@ -1,4 +1,3 @@
-import 'package:blablcar/theme/theme.dart';
 import 'package:flutter/material.dart';
 import '../../dummy_data/dummy_data.dart';
 import '../../model/ride/locations.dart';
