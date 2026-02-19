@@ -10,7 +10,7 @@ class LocationPickerScreen extends StatefulWidget {
   @override
   _LocationPickerScreenState createState() => _LocationPickerScreenState();
 }
-
+  
 class _LocationPickerScreenState extends State<LocationPickerScreen> {
   List<Location> filteredLocations = [];
   final TextEditingController _searchController = TextEditingController();

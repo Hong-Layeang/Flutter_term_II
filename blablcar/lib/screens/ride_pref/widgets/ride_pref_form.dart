@@ -75,15 +75,15 @@ class _RidePrefFormState extends State<RidePrefForm> {
     }
   }
 
-  void _onDatePressed() async {
-
+  void _onDatePressed() {
+    print("on date press");
   }
 
-  void _onSeatsPressed() async {
-
+  void _onSeatsPressed() {
+    print("on seat pressed");
   }
 
-  void _onSearchPressed() async {
+  void _onSearchPressed() {
     if (departure == null) return;
 
     final results = RidesService.filterBy(
