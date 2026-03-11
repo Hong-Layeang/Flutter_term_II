@@ -9,7 +9,6 @@ class LibraryContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 1- Read the globbal song repository
     LibraryViewModel mv = context.watch<LibraryViewModel>();
 
     return Padding(
@@ -17,24 +16,56 @@ class LibraryContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text("Library", style: AppTextStyles.heading),
-          SizedBox(height: 50),
-      
+          const SizedBox(height: 50),
+          
           Expanded(
-            child: ListView.builder(
-              itemCount: mv.songs.length,
-              itemBuilder: (context, index) => SongTile(
-                song: mv.songs[index],
-                isPlaying: mv.isSongPlaying(mv.songs[index]) ,
-                onTap: () {
-                  mv.start(mv.songs[index]);
-                },
-              ),
-            ),
+            child: _buildBody(mv),
           ),
         ],
       ),
     );
+  }
+
+  // Helper method to handle the 3 states 
+  Widget _buildBody(LibraryViewModel mv) {
+    switch (mv.status) {
+      case LibraryStatus.loading:
+        // Handle loading state
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+
+      case LibraryStatus.error:
+        // Handle error state 
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(mv.errorMessage, textAlign: TextAlign.center, style: const TextStyle(color: Colors.red)),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () => mv.refreshSongs(),
+                child: const Text("Retry"),
+              )
+            ],
+          ),
+        );
+
+      case LibraryStatus.success:
+        // Handle success state 
+        return ListView.builder(
+          itemCount: mv.songs.length,
+          itemBuilder: (context, index) {
+            final song = mv.songs[index];
+            return SongTile(
+              song: song,
+              isPlaying: mv.isSongPlaying(song),
+              onTap: () => mv.start(song),
+            );
+          },
+        );
+    }
   }
 }
