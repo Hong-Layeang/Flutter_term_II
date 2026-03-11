@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/blablcar/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/blablcar/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/blablcar/build" />
+      <excludeFolder url="file://$MODULE_DIR$/week4/color_app/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/week4/color_app/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/week4/color_app/build" />
+      <excludeFolder url="file://$MODULE_DIR$/week4/download_app/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/week4/download_app/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/week4/download_app/build" />
+      <excludeFolder url="file://$MODULE_DIR$/week5/song/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/week5/song/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/week5/song/build" />
+      <excludeFolder url="file://$MODULE_DIR$/week7/small_homework/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/week7/small_homework/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/week7/small_homework/build" />
+      <excludeFolder url="file://$MODULE_DIR$/week8/small_task/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/week8/small_task/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/week8/small_task/build" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
