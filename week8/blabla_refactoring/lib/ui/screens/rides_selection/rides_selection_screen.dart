@@ -1,7 +1,8 @@
+import 'package:blabla/data/repositories/ride_preferences/ride_preference_repository.dart';
+import 'package:blabla/data/repositories/ride_preferences/ride_preference_repository_mock.dart';
 import 'package:flutter/material.dart';
 import '../../../model/ride/ride.dart';
 import '../../../model/ride_pref/ride_pref.dart';
-import '../../../services/ride_prefs_service.dart';
 import '../../../services/rides_service.dart';
 import '../../../utils/animations_util.dart' show AnimationUtils;
 import '../../theme/theme.dart';
@@ -23,6 +24,8 @@ class RidesSelectionScreen extends StatefulWidget {
 }
 
 class _RidesSelectionScreenState extends State<RidesSelectionScreen> {
+  final RidePreferenceRepository _ridePreferenceRepository = RidePreferenceRepositoryMock.instance;
+  
   void onBackTap() {
     Navigator.pop(context);
   }
@@ -36,7 +39,7 @@ class _RidesSelectionScreenState extends State<RidesSelectionScreen> {
   }
 
   RidePreference get selectedRidePreference =>
-      RidePrefsService.selectedPreference!; // not null at this state
+      _ridePreferenceRepository.selectedPreference!; // not null at this state
 
   List<Ride> get matchingRides =>
       RidesService.getRidesFor(selectedRidePreference);
@@ -52,7 +55,7 @@ class _RidesSelectionScreenState extends State<RidesSelectionScreen> {
 
     if (newPreference != null) {
       // 2 - Ask the service to update the current preference
-      RidePrefsService.selectPreference(newPreference);
+      _ridePreferenceRepository.selectPreference(newPreference);
 
       // 3 -   Update the widget state  - TODO Improve this with proper state managagement
       setState(() {});
