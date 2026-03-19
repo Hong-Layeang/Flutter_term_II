@@ -24,10 +24,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
   cupertino_icons: ^1.0.8
   intl: ^0.20.2
   flutter_svg: ^2.0.17
+  provider: ^6.1.5
 
 
 dev_dependencies:

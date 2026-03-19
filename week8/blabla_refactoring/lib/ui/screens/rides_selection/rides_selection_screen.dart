@@ -1,6 +1,10 @@
 import 'package:blabla/data/repositories/ride_preferences/ride_preference_repository.dart';
 import 'package:blabla/data/repositories/ride_preferences/ride_preference_repository_mock.dart';
+import 'package:blabla/data/repositories/rides/ride_repository.dart';
+import 'package:blabla/data/repositories/rides/ride_repository_mock.dart';
+import 'package:blabla/ui/states/ride_preferences_state.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../model/ride/ride.dart';
 import '../../../model/ride_pref/ride_pref.dart';
 import '../../../services/rides_service.dart';
@@ -25,6 +29,7 @@ class RidesSelectionScreen extends StatefulWidget {
 
 class _RidesSelectionScreenState extends State<RidesSelectionScreen> {
   final RidePreferenceRepository _ridePreferenceRepository = RidePreferenceRepositoryMock.instance;
+  final RideRepository _rideRepository = RideRepositoryMock.instance;
   
   void onBackTap() {
     Navigator.pop(context);
@@ -44,12 +49,12 @@ class _RidesSelectionScreenState extends State<RidesSelectionScreen> {
   List<Ride> get matchingRides =>
       RidesService.getRidesFor(selectedRidePreference);
 
-  void onPreferencePressed() async {
+  void onPreferencePressed(RidePreference currentPreference) async {
     // 1 - Navigate to the rides preference picker
     RidePreference? newPreference = await Navigator.of(context)
         .push<RidePreference>(
           AnimationUtils.createRightToLeftRoute(
-            RidePreferenceModal(initialPreference: selectedRidePreference),
+            RidePreferenceModal(initialPreference: currentPreference),
           ),
         );
 
@@ -64,6 +69,10 @@ class _RidesSelectionScreenState extends State<RidesSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final ridePrefsState = context.watch<RidePreferencesState>();
+    final selectedRidePreference = ridePrefsState.selectedPreference!;
+    final matchingRides = _rideRepository.getRidesFor(selectedRidePreference);
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(
@@ -74,7 +83,7 @@ class _RidesSelectionScreenState extends State<RidesSelectionScreen> {
               ridePreference: selectedRidePreference,
               onBackPressed: onBackTap,
               onFilterPressed: onFilterPressed,
-              onPreferencePressed: onPreferencePressed,
+              onPreferencePressed: () => onPreferencePressed(selectedRidePreference),
             ),
         
             SizedBox(height: 100),
