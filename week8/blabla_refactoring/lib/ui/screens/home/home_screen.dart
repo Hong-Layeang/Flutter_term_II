@@ -1,5 +1,3 @@
-import 'package:blabla/data/repositories/ride_preferences/ride_preference_repository.dart';
-import 'package:blabla/data/repositories/ride_preferences/ride_preference_repository_mock.dart';
 import 'package:blabla/model/ride_pref/ride_pref.dart';
 import 'package:blabla/ui/states/ride_preferences_state.dart';
 import 'package:flutter/material.dart';
@@ -17,16 +15,10 @@ const String blablaHomeImagePath = 'assets/images/blabla_home.png';
 /// - Enter his/her ride preference and launch a search on it
 /// - Or select a last entered ride preferences and launch a search on it
 ///
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-
-  void onRidePrefSelected(RidePreference selectedPreference) async {
+  Future<void> onRidePrefSelected(BuildContext context, RidePreference selectedPreference) async {
     // 1- Ask the state to update the current preference
     context.read<RidePreferencesState>().selectPreference(selectedPreference);
 
@@ -35,18 +27,16 @@ class _HomeScreenState extends State<HomeScreen> {
       context,
     ).push(AnimationUtils.createBottomToTopRoute(RidesSelectionScreen()));
 
-    // 3 - After wait  - Update the state   - TODO Improve this with proper state managagement
-    setState(() {});
   }
 
   @override
-  Widget build(context) {
-    return Stack(children: [_buildBackground(), _buildForeground()]);
-  }
-
-  Widget _buildForeground() {
+  Widget build(BuildContext context) {
     final ridePrefsState = context.watch<RidePreferencesState>();
 
+    return Stack(children: [_buildBackground(), _buildForeground(context, ridePrefsState)]);
+  }
+
+  Widget _buildForeground(BuildContext context, RidePreferencesState ridePrefsState) {
     return Column(
       children: [
         // 1 - THE HEADER
@@ -73,12 +63,12 @@ class _HomeScreenState extends State<HomeScreen> {
               // 2 - THE FORM
               BlaRidePreferencePicker(
                 initRidePreference: ridePrefsState.selectedPreference,
-                onRidePreferenceSelected: onRidePrefSelected,
+                onRidePreferenceSelected: (pref) => onRidePrefSelected(context, pref),
               ),
               SizedBox(height: BlaSpacings.m),
 
               // 3 - THE HISTORY
-              _buildHistory(),
+              _buildHistory(context, ridePrefsState),
             ],
           ),
         ),
@@ -86,8 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildHistory() {
-    final ridePrefsState = context.watch<RidePreferencesState>();
+  Widget _buildHistory(BuildContext context, RidePreferencesState ridePrefsState) {
 
     // Reverse the history of preferences
     List<RidePreference> history = ridePrefsState.history.reversed
@@ -100,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
         itemCount: history.length,
         itemBuilder: (ctx, index) => HomeHistoryTile(
           ridePref: history[index],
-          onPressed: () => onRidePrefSelected(history[index]),
+          onPressed: () => onRidePrefSelected(context, history[index]),
         ),
       ),
     );
