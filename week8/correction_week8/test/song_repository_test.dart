@@ -1,5 +1,5 @@
-import '../lib/data/repositories/songs/song_repository_mock.dart';
-import '../lib/data/repositories/songs/song_repository.dart';
+import 'package:correction_week8/data/repositories/songs/song_repository_mock.dart';
+import 'package:correction_week8/data/repositories/songs/song_repository.dart';
 import '../model/songs/song.dart';
 
 void main() async {
