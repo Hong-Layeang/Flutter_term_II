@@ -5,7 +5,7 @@ import 'package:blabla/model/ride/locations.dart';
 class LocationRepositoryMock implements LocationRepository {
   LocationRepositoryMock._();
 
-  static final LocationRepositoryMock instace = LocationRepositoryMock._();
+  static final LocationRepositoryMock instance = LocationRepositoryMock._();
 
   final List<Location> _locations = fakeLocations;
 

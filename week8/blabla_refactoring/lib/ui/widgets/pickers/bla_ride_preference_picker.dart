@@ -1,7 +1,8 @@
-import 'package:blabla/data/repositories/ride_preferences/ride_preference_repository_mock.dart';
+import 'package:blabla/ui/states/ride_preferences_state.dart';
 import 'package:blabla/ui/widgets/buttons/bla_button.dart';
 import 'package:blabla/ui/widgets/display/bla_divider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../model/ride/locations.dart';
 import '../../../model/ride_pref/ride_pref.dart';
@@ -40,6 +41,8 @@ class _BlaRidePreferencePickerState extends State<BlaRidePreferencePicker> {
   late DateTime departureDate;
   Location? arrival;
   late int requestedSeats;
+
+  int get maxAllowedSeats => context.read<RidePreferencesState>().maxAllowedSeats;
 
   // ----------------------------------
   // Initialize the Form attributes
@@ -114,7 +117,7 @@ class _BlaRidePreferencePickerState extends State<BlaRidePreferencePicker> {
       AnimationUtils.createRightToLeftRoute(
         BlaSeatPicker(
           initSeats: requestedSeats,
-          maxSeat: RidePreferenceRepositoryMock.instance.maxAllowedSeats,
+          maxSeat: maxAllowedSeats,
         ),
       ),
     );

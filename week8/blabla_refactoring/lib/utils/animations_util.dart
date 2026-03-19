@@ -65,8 +65,8 @@ class AnimationUtils {
         return GestureDetector(
           onTap: () => Navigator.pop(context), // Close when tapping outside
           child: Scaffold(
-            backgroundColor: Colors.black.withOpacity(
-              0.5,
+            backgroundColor: Colors.black.withValues(
+              alpha: 0.5,
             ), // Semi-transparent overlay
             body: Align(
               alignment: Alignment.topCenter,
