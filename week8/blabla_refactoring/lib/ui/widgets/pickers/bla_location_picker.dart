@@ -1,4 +1,5 @@
-import 'package:blabla/services/location_service.dart';
+import 'package:blabla/data/repositories/locations/location_repository.dart';
+import 'package:blabla/data/repositories/locations/location_repository_mock.dart';
 import 'package:blabla/ui/widgets/display/bla_divider.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,8 @@ class BlaLocationPicker extends StatefulWidget {
 }
 
 class _BlaLocationPickerState extends State<BlaLocationPicker> {
+  final LocationRepository _locationRepository = LocationRepositoryMock.instace;
+
   String currentSearchText = "";
 
   void onTap(Location location) {
@@ -47,16 +50,7 @@ class _BlaLocationPickerState extends State<BlaLocationPicker> {
   }
 
   List<Location> get filteredLocation {
-    if (currentSearchText.length < 2) {
-      return [];
-    }
-    return LocationsService.availableLocations
-        .where(
-          (location) => location.name.toUpperCase().contains(
-            currentSearchText.toUpperCase(),
-          ),
-        )
-        .toList();
+    return _locationRepository.search(currentSearchText);
   }
 
   @override
