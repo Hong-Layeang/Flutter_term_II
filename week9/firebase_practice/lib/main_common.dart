@@ -1,3 +1,4 @@
+import 'package:firebase_practice/ui/screens/artist/artist_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'ui/screens/library/library_screen.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = [  LibraryScreen(), SettingsScreen()];
+  final List<Widget> _pages = [ArtistScreen(), LibraryScreen(), SettingsScreen()];
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +55,11 @@ class _MyAppState extends State<MyApp> {
           },
           selectedItemColor: settingsState.theme.color,
           items: [
-             BottomNavigationBarItem(
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_2_rounded),
+              label: 'Artist'
+            ),
+            BottomNavigationBarItem(
               icon: Icon(Icons.library_music),
               label: 'Library',
             ),
