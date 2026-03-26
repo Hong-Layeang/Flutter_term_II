@@ -6,11 +6,15 @@ class SongTile extends StatelessWidget {
   const SongTile({
     super.key,
     required this.song,
+    required this.artistName,
+    required this.artistGenre,
     required this.isPlaying,
     required this.onTap,
   });
 
   final Song song;
+  final String artistName;
+  final String artistGenre;
   final bool isPlaying;
   final VoidCallback onTap;
 
@@ -34,7 +38,7 @@ class SongTile extends StatelessWidget {
             ),
           ),
           title: Text(song.title),
-          subtitle: Text("${song.duration.inMinutes} mins"),
+          subtitle: Text("${song.duration.inMinutes} mins   $artistName - $artistGenre"),
         ),
       ),
     );
