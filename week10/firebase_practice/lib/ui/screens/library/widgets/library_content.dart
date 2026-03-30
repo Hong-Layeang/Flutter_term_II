@@ -27,7 +27,9 @@ class LibraryContent extends StatelessWidget {
 
       case AsyncValueState.success:
         List<LibraryItemData> data = asyncValue.data!;
-        content = ListView.builder(
+        content = RefreshIndicator(
+          onRefresh: mv.refresh,
+          child: ListView.builder(
           itemCount: data.length,
           itemBuilder: (context, index) => LibraryItemTile(
             data: data[index],
@@ -39,7 +41,7 @@ class LibraryContent extends StatelessWidget {
               mv.likeSong(data[index].song);
             },
           ),
-        );
+        ));
     }
 
     return Padding(

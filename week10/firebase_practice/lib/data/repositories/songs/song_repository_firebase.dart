@@ -10,8 +10,15 @@ import 'song_repository.dart';
 class SongRepositoryFirebase extends SongRepository {
   final Uri songsUri = FirebaseConfig.baseUrl.replace(path: '/songs.json');
 
+  List<Song>? _cachedSongs;
+
   @override
-  Future<List<Song>> fetchSongs() async {
+  Future<List<Song>> fetchSongs({bool forceFetch = false}) async {
+    // 1. Return cache if available and not forced
+    if (_cachedSongs != null && !forceFetch) {
+      return _cachedSongs!;
+    }
+
     final http.Response response = await http.get(songsUri);
 
     if (response.statusCode == 200) {
@@ -22,6 +29,8 @@ class SongRepositoryFirebase extends SongRepository {
       for (final entry in songJson.entries) {
         result.add(SongDto.fromJson(entry.key, entry.value));
       }
+      // 3. Store in memory
+      _cachedSongs = result;
       return result;
     } else {
       // 2- Throw expcetion if any issue
@@ -36,6 +45,7 @@ class SongRepositoryFirebase extends SongRepository {
   Future<Song> likeSong(Song song) async {
     final int newLikes = song.likes + 1;
 
+    // PUT to update only the likes field for this song
     final Uri likesUri = FirebaseConfig.baseUrl.replace(path: '/songs/${song.id}/likes.json');
     final http.Response response = await http.put(
       likesUri,
@@ -43,6 +53,7 @@ class SongRepositoryFirebase extends SongRepository {
     );
 
     if (response.statusCode == 200) {
+      // Return the updated song locally (no need for an extra round-trip)
       return song.copyWith(likes: newLikes);
     } else {
       throw Exception('Failed to like song');

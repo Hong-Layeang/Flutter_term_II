@@ -11,8 +11,15 @@ class ArtistRepositoryFirebase implements ArtistRepository {
 
   final artistsUri = FirebaseConfig.baseUrl.replace(path: '/artists.json');
 
+  List<Artist>? _cachedArtists;
+
   @override
-  Future<List<Artist>> fetchArtists() async {
+  Future<List<Artist>> fetchArtists({bool forceFetch = false}) async {
+    // 1. Return cache if available and not forced
+    if (_cachedArtists != null && !forceFetch) {
+      return _cachedArtists!;
+    }
+
     final http.Response response = await http.get(artistsUri);
 
     if (response.statusCode == 200) {
@@ -23,6 +30,8 @@ class ArtistRepositoryFirebase implements ArtistRepository {
       for (final entry in songJson.entries) {
         result.add(ArtistDto.fromJson(entry.key, entry.value));
       }
+      // 3. Store in memory
+      _cachedArtists = result;
       return result;
     } else {
       // 2- Throw expcetion if any issue
