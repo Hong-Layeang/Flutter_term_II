@@ -22,4 +22,11 @@ class SongRepositoryMock implements SongRepository {
       );
     });
   }
+
+  @override
+  Future<Song> likeSong(Song song) async {
+    return Future.delayed(Duration(milliseconds: 500), () {
+      return song.copyWith(likes: song.likes + 1);
+    });
+  }
 }
